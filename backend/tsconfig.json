@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "target": "ES2021",
+    "target": "ESNext",
     "moduleResolution": "node",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "esModuleInterop": true,
     "skipDefaultLibCheck": true,
     "allowSyntheticDefaultImports": true,
@@ -24,8 +24,9 @@
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
     "types": ["node", "jest"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", ".eslintrc.cjs", "jest-e2e.cjs", "test/**/*.spec.ts"]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", "dist", ".eslintrc.cjs", "jest-e2e.cjs"]
 }
