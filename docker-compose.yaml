@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5430:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shopNest-network
+
+  api:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/mydb
+    ports:
+      - "3002:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+    command: npm run start:dev
+    networks:
+      - shopNest-network
+
+volumes:
+  postgres_data:
+
+networks:
+  shopNest-network:
+    driver: bridge
