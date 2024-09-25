@@ -1,15 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../../../src/modules/users/users.service';
-import { PrismaService } from '../../../src/prisma/prisma.service';
-import * as bcrypt from 'bcryptjs';
+import { PrismaService } from '../../../src/prisma/prisma.service'; // Include PrismaService
 import { PrismaClient } from '@prisma/client';
 
-describe('UsersService Integration', () => {
+describe('UsersService Integration - findByEmail', () => {
   let service: UsersService;
   let prisma: PrismaClient;
 
   beforeAll(async () => {
-
     prisma = new PrismaClient();
 
     const module: TestingModule = await Test.createTestingModule({
@@ -23,21 +21,19 @@ describe('UsersService Integration', () => {
     await prisma.$disconnect();
   });
 
-  it('should hash the password and create a user in the test database', async () => {
+  it('should find a user by their email after creating them', async () => {
     // Arrange
     const email = 'test@example.com';
     const password = 'password123';
-    await service.createUser(email, password);
+    const createdUser = await service.createUser(email, password);
 
     // Act
-    const foundUser = await prisma.user.findUnique({
-      where: { email: email },
-    });
+    const foundUser = await service.findByEmail(email);
 
     // Assert
     expect(foundUser).toBeDefined();
-    expect(foundUser?.email).toEqual(email);
-    expect(await bcrypt.compare(password, foundUser?.password || '')).toBe(true); // Check if the password matches the hashed password
+    expect(foundUser?.email).toBe(email);
+    expect(foundUser?.id).toBe(createdUser.id);
   });
 
   afterEach(async () => {
