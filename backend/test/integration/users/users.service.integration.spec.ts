@@ -3,6 +3,7 @@ import { UsersService } from '../../../src/modules/users/users.service';
 import { PrismaService } from '../../../src/prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
+import {  User } from '@prisma/client/index';
 
 describe('UsersService Integration', () => {
   let service: UsersService;
@@ -30,7 +31,7 @@ describe('UsersService Integration', () => {
     await service.createUser(email, password);
 
     // Act
-    const foundUser = await prisma.user.findUnique({
+    const foundUser: User | null = await prisma.user.findUnique({
       where: { email: email },
     });
 

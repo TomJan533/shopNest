@@ -2,6 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
+import { User } from '@prisma/client';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -10,19 +12,23 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.findByEmail(email);
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const { password, ...result } = user; // Remove password from the result
-      return result;
+
+  private hasPassword(user: User | Omit<User, 'password'>): user is User {
+    return 'password' in user;
+  }
+
+  async validateUser(email: string, password: string): Promise<Omit<User, 'password'> | null> {
+    const user = await this.usersService.findByEmail(email, false); 
+    if (user && this.hasPassword(user) && await bcrypt.compare(password, user.password)) {
+      return this.usersService.omitPassword(user);
     }
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  async login(user: any) {
-    const payload = { email: user.email, sub: user.id, role: user.role };
+  async login(user: Omit<User, 'password'>): Promise<{ access_token: string }> {
+    const payload: JwtPayload = { email: user.email, sub: user.id, role: user.role };
     return {
-      access_token: this.jwtService.sign(payload), // Sign the JWT token
+      access_token: this.jwtService.sign(payload),
     };
   }
 }

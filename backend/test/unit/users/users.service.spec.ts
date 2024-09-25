@@ -56,7 +56,6 @@ describe('UsersService', () => {
     expect(result).toEqual({
       id: 1,
       email: email,
-      password: hashedPassword,
       role: 'CLIENT',
     });
   });
