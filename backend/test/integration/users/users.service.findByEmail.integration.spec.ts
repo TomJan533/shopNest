@@ -8,6 +8,7 @@ describe('UsersService Integration - findByEmail', () => {
   let prisma: PrismaClient;
 
   beforeAll(async () => {
+
     prisma = new PrismaClient();
 
     const module: TestingModule = await Test.createTestingModule({
@@ -23,7 +24,7 @@ describe('UsersService Integration - findByEmail', () => {
 
   it('should find a user by their email after creating them', async () => {
     // Arrange
-    const email = 'test@example.com';
+    const email = 'testfindByEmail@example.com';
     const password = 'password123';
     const createdUser = await service.createUser(email, password);
 

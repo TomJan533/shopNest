@@ -25,7 +25,7 @@ describe('UsersService Integration', () => {
 
   it('should hash the password and create a user in the test database', async () => {
     // Arrange
-    const email = 'test@example.com';
+    const email = 'testcreateuser@example.com';
     const password = 'password123';
     await service.createUser(email, password);
 
