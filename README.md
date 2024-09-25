@@ -24,3 +24,14 @@ Docker: Containerization platform to ensure a consistent development environment
 Jest: Testing framework.
 Medusa.js: Headless e-commerce platform integrated as a main feature.
 Swagger: API documentation.
+
+
+## Database migrations
+
+Use dotenv installed globally in order to migrate databases defined by multiple .env files:
+
+```bash
+npm install -g dotenv-cli
+npx dotenv -e .env -- npx prisma migrate dev
+npx dotenv -e .env.test -- npx prisma migrate dev
+```
