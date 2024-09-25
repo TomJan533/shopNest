@@ -9,5 +9,8 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.js$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',  // Remove .js extensions for TypeScript imports
+  },
   verbose: true,
 };

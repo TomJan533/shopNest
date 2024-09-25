@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../users/users.service.js';
 import * as bcrypt from 'bcryptjs';
 import { User } from '@prisma/client';
-import { JwtPayload } from './jwt-payload.interface';
+import { JwtPayload } from './jwt-payload.interface.js';
 
 @Injectable()
 export class AuthService {
