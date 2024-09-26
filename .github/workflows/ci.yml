@@ -49,12 +49,12 @@ jobs:
           npx prisma migrate dev --name init
         working-directory: ./backend
 
-      # - name: Run Unit Tests
-      #   run: npm run test:unit
-      #   working-directory: ./backend
+      - name: Run Unit Tests
+        run: npm run test:unit
+        working-directory: ./backend
 
-      # - name: Run Integration Tests
-      #   env:
-      #     DATABASE_URL: postgresql://postgres:password@localhost:5432/testdb
-      #   run: npm run test:integration
-      #   working-directory: ./backend
+      - name: Run Integration Tests
+        env:
+          DATABASE_URL: postgresql://postgres:password@localhost:5432/testdb
+        run: npm run test:integration
+        working-directory: ./backend
