@@ -17,7 +17,7 @@ jobs:
       postgres:
         image: postgres:13
         ports:
-          - 5432:5432
+          - 5430:5432
         env:
           POSTGRES_DB: testdb
           POSTGRES_USER: postgres
@@ -43,7 +43,7 @@ jobs:
 
       - name: Prisma Migrate for Integration Tests
         env:
-          DATABASE_URL: postgresql://postgres:password@localhost:5432/testdb
+          DATABASE_URL: postgresql://postgres:password@localhost:5430/testdb
         run: |
           npx prisma generate
           npx prisma migrate dev --name init
@@ -55,6 +55,6 @@ jobs:
 
       - name: Run Integration Tests
         env:
-          DATABASE_URL: postgresql://postgres:password@localhost:5432/testdb
+          DATABASE_URL: postgresql://postgres:password@localhost:5430/testdb
         run: npm run test:integration
         working-directory: ./backend
