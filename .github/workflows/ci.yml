@@ -1,0 +1,62 @@
+name: CI - Unit and Integration Tests
+
+# Trigger the workflow on push or pull requests to main or development branches
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu version
+    services:
+      postgres:
+        image: postgres:13  # Specify the PostgreSQL version for integration tests
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js version (adjust the version based on your project)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Set up the test database for Prisma (if using Prisma for integration tests)
+      - name: Prisma Migrate for Integration Tests
+        run: |
+          npx prisma generate
+          npx prisma migrate dev --name init --force
+
+      # ! DISABLED FOR NOW
+      # # Step 5: Run Unit Tests
+      # - name: Run Unit Tests
+      #   run: npm run test:unit
+
+      # # Step 6: Run Integration Tests
+      # - name: Run Integration Tests
+      #   env:
+      #     DATABASE_URL: postgresql://postgres:password@localhost:5432/testdb  # Use the test database
+      #   run: npm run test:integration
