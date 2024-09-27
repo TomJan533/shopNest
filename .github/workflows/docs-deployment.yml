@@ -12,12 +12,17 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
+      - name: Copy Swagger files to /docs
+        run: |
+          mkdir -p docs
+          cp -R backend/docs/* docs/
+
       - name: Verify files were copied
         run: |
-          ls -a ./backend/docs  # Check that the Swagger files are in place
+          ls -a ./docs
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./backend/docs
+          publish_dir: ./docs  # Deploying from docs/ at the root
