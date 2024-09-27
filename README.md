@@ -31,3 +31,4 @@ Simple E-commerce shop build with NestJS, Prisma ORM, PostgreSQL
 - **Docker**: Containerization platform to ensure a consistent development environment.
 - **Jest**: Testing framework
 - **Swagger**: API documentation
+
