@@ -26,7 +26,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate:swagger": "npm run clean && npm run build && node scripts/generate-swagger-static.js"
+    "generate:swagger": "npm run clean && npm run build && rm -rf docs/* && node scripts/generate-swagger-static.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

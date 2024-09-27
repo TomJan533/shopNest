@@ -26,11 +26,11 @@ async function generateSwagger() {
   // Copy Swagger-UI assets to the docs folder
   fs.copySync(swaggerUiAssetPath(), resolve(__dirname, '../docs'));
 
-  // Inject custom Swagger JSON URL into the index.html
-  const indexHtmlPath = resolve(__dirname, '../docs/index.html');
-  const indexHtml = fs.readFileSync(indexHtmlPath, 'utf-8')
+  // Inject custom Swagger JSON URL into swagger-initializer.js
+  const swaggerInitializerPath = resolve(__dirname, '../docs/swagger-initializer.js');
+  const swaggerInitializer = fs.readFileSync(swaggerInitializerPath, 'utf-8')
     .replace('https://petstore.swagger.io/v2/swagger.json', './swagger.json');
-  fs.writeFileSync(indexHtmlPath, indexHtml);
+  fs.writeFileSync(swaggerInitializerPath, swaggerInitializer);
 
   await app.close();
 }
