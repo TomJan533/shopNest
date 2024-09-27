@@ -18,7 +18,7 @@ async function generateSwagger() {
   const document = SwaggerModule.createDocument(app, config);
 
   // Get the path of the current module
-  const __dirname = fileURLToPath(new URL('.', import.meta.url));
+  const __dirname = fileURLToPath(new URL('./..', import.meta.url));
 
   // Write the Swagger JSON file
   writeFileSync(resolve(__dirname, '../docs/swagger.json'), JSON.stringify(document));
