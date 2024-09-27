@@ -14,7 +14,7 @@
     "clean": "rm -rf dist",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/src/main",
+    "start": "npm run clean && npm run build && node dist/src/main",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
@@ -25,7 +25,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "generate:swagger": "npm run clean && npm run build && node scripts/generate-swagger-static.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -34,11 +35,15 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.4.2",
     "@prisma/client": "^5.20.0",
     "bcryptjs": "^2.4.3",
+    "passport-jwt": "^4.0.1",
     "prisma": "^5.20.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "swagger-ui-dist": "^5.17.14",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
